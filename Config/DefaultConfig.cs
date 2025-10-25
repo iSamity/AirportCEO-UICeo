@@ -1,10 +1,22 @@
 ﻿using BepInEx.Configuration;
+using UICeo.Sorting.Models;
 
 namespace UICeo.Config;
 
 static class DefaultConfig
 {
     public static ConfigEntry<bool> SkipLogosOnStartUp;
+
+    internal static ConfigEntry<bool> ShowHireConfirmation { get; private set; }
+    internal static ConfigEntry<bool> ShowFireConfirmation { get; private set; }
+    internal static ConfigEntry<bool> ShowTrainConfirmation { get; private set; }
+    internal static ConfigEntry<bool> ShowRejectConfirmation { get; private set; }
+
+    internal static ConfigEntry<bool> SortByEmployeeType { get; private set; }
+    internal static ConfigEntry<SortByEnum> SortOptions { get; private set; }
+    internal static ConfigEntry<SortDirectionEnum> SortDirection { get; private set; }
+
+
 
     public static void Setup()
     {
@@ -14,6 +26,10 @@ static class DefaultConfig
         ShowFireConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Fire Confirmation", true, "Show a confirmation dialog when firing an employee");
         ShowTrainConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Train Confirmation", false, "Show a confirmation dialog when training an employee");
         ShowRejectConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Reject Confirmation", true, "Show a confirmation dialog when rejecting an employee");
+
+        SortByEmployeeType = ConfigReference.Bind("Sorting - Staff", "Sort By Employee Type", true, "Sort staff and applicants by their employee type");
+        SortOptions = ConfigReference.Bind("Sorting - Staff", "Sort Options", SortByEnum.Skill, "Sort staff and applicants by skill when hiring");
+        SortDirection = ConfigReference.Bind("Sorting - Staff", "Sort Direction", SortDirectionEnum.Descending, "Ascending means low to hight, Descending means high to low");
 
     }
 
