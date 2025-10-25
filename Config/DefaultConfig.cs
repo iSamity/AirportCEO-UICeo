@@ -17,6 +17,8 @@ static class DefaultConfig
     internal static ConfigEntry<SortDirectionEnum> SortDirection { get; private set; }
 
 
+    internal static ConfigEntry<bool> SyncStaffFilters { get; private set; }
+
 
     public static void Setup()
     {
@@ -31,6 +33,7 @@ static class DefaultConfig
         SortOptions = ConfigReference.Bind("Sorting - Staff", "Sort Options", SortByEnum.Skill, "Sort staff and applicants by skill when hiring");
         SortDirection = ConfigReference.Bind("Sorting - Staff", "Sort Direction", SortDirectionEnum.Descending, "Ascending means low to hight, Descending means high to low");
 
+        SyncStaffFilters = ConfigReference.Bind("General Filters", "Sync Staff Filters", true, "Sync the staff filters between the staff and applicants screens");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
