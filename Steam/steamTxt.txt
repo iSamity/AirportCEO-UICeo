@@ -1,0 +1,12 @@
+[h3]Note[/h3]
+This mod requires the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3109136766]AirportCEO Mod Loader[/url] to function. Please make sure to have it correctly downloaded and installed!
+
+[h3]Description[/h3]
+A code mod that handles UI changes. For now lets you skip the intro when starting up the game
+
+[h3]Features[/h3]
+- Skip the intro when starting up the game
+
+
+[h3]Version[/h3] read more on [url="https://github.com/iSamity/AirportCEO-UICeo/releases"]Github[/url]
+- v1.0.0 - Initial release
