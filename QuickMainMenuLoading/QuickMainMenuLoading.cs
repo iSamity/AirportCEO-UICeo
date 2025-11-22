@@ -10,7 +10,6 @@ static class QuickMainMenuLoading
     [HarmonyPatch(nameof(MainMenuWorldController.InvokeMainMenuLoadingAnimations))]
     public static bool Patch_InvokeMainMenuLoadingAnimations(MainMenuWorldController __instance)
     {
-        Plugin.Logger.LogInfo(Config.DefaultConfig.SkipLogosOnStartUp.Value);
         if (Config.DefaultConfig.SkipLogosOnStartUp.Value == false)
         {
             return true;
