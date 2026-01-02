@@ -9,8 +9,8 @@ A code mod that handles changes to UI, including sorting skipping intro and much
 - Sync filter between staff and applicant views
 - Improve sorting for staff and applicant views based on Default (name) / Skill / Salary strategies
 
-
-
 [h3]Version[/h3] read more on [url="https://github.com/iSamity/AirportCEO-UICeo/releases"]Github[/url]
 - v1.1.0 - Confirmations, sync staff dropdown and sorting
 - v1.0.0 - Initial release
+
+[url=https://buymeacoffee.com/isamity][img]https://i.imgur.com/nyZtCjx.png[/img][/url]
