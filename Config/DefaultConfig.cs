@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using UICeo.Sorting.Models;
+using UICeo.CameraZoom;
 
 namespace UICeo.Config;
 
@@ -19,6 +20,9 @@ static class DefaultConfig
 
     internal static ConfigEntry<bool> SyncStaffFilters { get; private set; }
 
+    internal static ConfigEntry<float> CameraZoomMin { get; private set; }
+    internal static ConfigEntry<float> CameraZoomMax { get; private set; }
+
 
     public static void Setup()
     {
@@ -34,6 +38,11 @@ static class DefaultConfig
         SortDirection = ConfigReference.Bind("Sorting - Staff", "Sort Direction", SortDirectionEnum.Descending, "Ascending means low to hight, Descending means high to low");
 
         SyncStaffFilters = ConfigReference.Bind("General Filters", "Sync Staff Filters", true, "Sync the staff filters between the staff and applicants screens");
+
+        CameraZoomMin = ConfigReference.Bind("Camera", "Camera Zoom Min", -6f, "Closest zoom level (less negative = closer). Default: -6");
+        CameraZoomMin.SettingChanged += CameraZoomService.OnCameraZoomMinChanged;
+        CameraZoomMax = ConfigReference.Bind("Camera", "Camera Zoom Max", -350f, "Furthest zoom level (more negative = further out). Default: -350");
+        CameraZoomMax.SettingChanged += CameraZoomService.OnCameraZoomMaxChanged;
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
