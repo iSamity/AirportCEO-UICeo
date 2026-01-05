@@ -60,6 +60,18 @@ internal static class CameraZoomService
         genericMoveCamera.ZRangeMax = DefaultConfig.CameraZoomMin.Value;
         genericMoveCamera.ZRangeMin = DefaultConfig.CameraZoomMax.Value;
 
+        // Adjust far clip plane to accommodate extreme zoom out
+        var mainCamera = cameraController.mainCamera;
+        if (mainCamera != null)
+        {
+            float requiredFarClip = Mathf.Abs(DefaultConfig.CameraZoomMax.Value) + 100f;
+            if (mainCamera.farClipPlane < requiredFarClip)
+            {
+                mainCamera.farClipPlane = requiredFarClip;
+                Plugin.Logger.LogInfo($"[CameraZoomService] Camera far clip plane adjusted to: {requiredFarClip}");
+            }
+        }
+
         Plugin.Logger.LogInfo($"[CameraZoomService] Live camera zoom updated - Min: {genericMoveCamera.ZRangeMax}, Max: {genericMoveCamera.ZRangeMin}");
     }
 
