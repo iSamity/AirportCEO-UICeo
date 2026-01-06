@@ -10,6 +10,39 @@ internal static class CameraZoomService
     private static readonly Vector2 DefaultNormalMap = new(700f, 700f);
     private static readonly Vector2 DefaultLargeMap = new(1050f, 700f);
     private const float DefaultZoomMax = -350f;
+    private const float DefaultWheelMouseMultiplier = 10000f;
+
+    /// <summary>
+    /// Applies camera zoom settings to the given GenericMoveCamera instance.
+    /// Called from CameraZoomPatch on initialization and from ApplyZoomToActiveCamera for live updates.
+    /// Note: Movement speed scaling is handled by CameraSpeedPatch in the Update method.
+    /// </summary>
+    internal static void ApplyCameraSettings(GenericMoveCamera genericMoveCamera, Camera mainCamera)
+    {
+        genericMoveCamera.ZRangeMax = DefaultConfig.CameraZoomMin.Value;
+        genericMoveCamera.ZRangeMin = DefaultConfig.CameraZoomMax.Value;
+
+        // Scale wheel mouse multiplier for extended zoom ranges (for scroll zoom speed)
+        float zoomRatio = Mathf.Abs(DefaultConfig.CameraZoomMax.Value) / Mathf.Abs(DefaultZoomMax);
+        if (zoomRatio > 1f)
+        {
+            genericMoveCamera.WheelMouseMultiplier = DefaultWheelMouseMultiplier * zoomRatio;
+            Plugin.Logger.LogInfo($"[CameraZoomService] Wheel multiplier scaled to: {genericMoveCamera.WheelMouseMultiplier}");
+        }
+
+        // Adjust far clip plane to accommodate extreme zoom out
+        if (mainCamera != null)
+        {
+            float requiredFarClip = Mathf.Abs(DefaultConfig.CameraZoomMax.Value) + 100f;
+            if (mainCamera.farClipPlane < requiredFarClip)
+            {
+                mainCamera.farClipPlane = requiredFarClip;
+                Plugin.Logger.LogInfo($"[CameraZoomService] Camera far clip plane adjusted to: {requiredFarClip}");
+            }
+        }
+
+        Plugin.Logger.LogInfo($"[CameraZoomService] Camera zoom set - Min: {genericMoveCamera.ZRangeMax}, Max: {genericMoveCamera.ZRangeMin}");
+    }
 
     internal static void OnCameraZoomMinChanged(object sender, EventArgs e)
     {
@@ -57,34 +90,7 @@ internal static class CameraZoomService
             return;
         }
 
-        genericMoveCamera.ZRangeMax = DefaultConfig.CameraZoomMin.Value;
-        genericMoveCamera.ZRangeMin = DefaultConfig.CameraZoomMax.Value;
-
-        // Adjust far clip plane to accommodate extreme zoom out
-        var mainCamera = cameraController.mainCamera;
-        if (mainCamera != null)
-        {
-            float requiredFarClip = Mathf.Abs(DefaultConfig.CameraZoomMax.Value) + 100f;
-            if (mainCamera.farClipPlane < requiredFarClip)
-            {
-                mainCamera.farClipPlane = requiredFarClip;
-                Plugin.Logger.LogInfo($"[CameraZoomService] Camera far clip plane adjusted to: {requiredFarClip}");
-            }
-        }
-
-        Plugin.Logger.LogInfo($"[CameraZoomService] Live camera zoom updated - Min: {genericMoveCamera.ZRangeMax}, Max: {genericMoveCamera.ZRangeMin}");
-    }
-
-    private static void OnZoomDialogResult(bool result, float sensibleZoom)
-    {
-        if (!result)
-        {
-            Plugin.Logger.LogInfo("[CameraZoomService] User cancelled zoom adjustment");
-            return;
-        }
-
-        DefaultConfig.CameraZoomMax.Value = sensibleZoom;
-        Plugin.Logger.LogInfo($"[CameraZoomService] Camera zoom max set to: {sensibleZoom}");
+        ApplyCameraSettings(genericMoveCamera, cameraController.mainCamera);
     }
 }
 
