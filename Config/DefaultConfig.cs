@@ -19,6 +19,7 @@ static class DefaultConfig
 
     internal static ConfigEntry<bool> SyncStaffFilters { get; private set; }
 
+    internal static ConfigEntry<bool> SkipAnimationsInMainMenu { get; private set; }
 
     public static void Setup()
     {
@@ -34,6 +35,8 @@ static class DefaultConfig
         SortDirection = ConfigReference.Bind("Sorting - Staff", "Sort Direction", SortDirectionEnum.Descending, "Ascending means low to hight, Descending means high to low");
 
         SyncStaffFilters = ConfigReference.Bind("General Filters", "Sync Staff Filters", true, "Sync the staff filters between the staff and applicants screens");
+
+        SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", true, "Skip the animations in the main menu like the social buttons and the main menu panel");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
