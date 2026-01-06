@@ -1,3 +1,4 @@
+using AirportCEOModLoader.Core;
 using HarmonyLib;
 using System.Collections;
 using UICeo.Config;
@@ -39,6 +40,10 @@ static class AutoContinuePatch
         if (!string.IsNullOrEmpty(mostRecentSave))
         {
             Singleton<MainMenuWorldController>.Instance.LaunchAirport(Enums.GameLoadSetting.ContinueGame, mostRecentSave, isMod: false);
+        }
+        else
+        {
+            DialogUtils.QueueDialog("Auto continue is enabled but no save files were found. Create a save first.");
         }
     }
 }

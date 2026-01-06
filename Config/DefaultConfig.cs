@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using UICeo.QuickLoading;
 using UICeo.Sorting.Models;
 
 namespace UICeo.Config;
@@ -25,7 +26,8 @@ static class DefaultConfig
     public static void Setup()
     {
         SkipLogosOnStartUp = ConfigReference.Bind("General", "Skip logos on startup", true, "Changing the value will take affect next time you startup the game");
-        AutoContinueLastGame = ConfigReference.Bind("General", "Auto continue last game", false, "Automatically continue the last saved game on startup. Takes affect next time you startup the game");
+        AutoContinueLastGame = ConfigReference.Bind("General", "Auto continue last game", false, "Automatically continue the last saved game on startup");
+        AutoContinueLastGame.SettingChanged += AutoContinueService.OnAutoContinueSettingChanged;
 
         ShowHireConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Hire Confirmation", false, "Show a confirmation dialog when hiring an employee");
         ShowFireConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Fire Confirmation", true, "Show a confirmation dialog when firing an employee");
