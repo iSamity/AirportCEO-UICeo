@@ -36,7 +36,7 @@ static class DefaultConfig
 
         SyncStaffFilters = ConfigReference.Bind("General Filters", "Sync Staff Filters", true, "Sync the staff filters between the staff and applicants screens");
 
-        SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", true, "Skip the animations in the main menu like the social buttons and the main menu panel");
+        SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", false, "Skip the animations in the main menu like the social buttons and the main menu panel");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
