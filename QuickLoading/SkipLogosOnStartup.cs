@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 
-namespace UICeo.QuickMainMenuLoading;
+namespace UICeo.QuickLoading;
 
 [HarmonyPatch(typeof(MainMenuWorldController))]
-static class QuickMainMenuLoading
+static class SkipLogosOnStartup
 {
 
     [HarmonyPrefix]

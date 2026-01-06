@@ -1,4 +1,5 @@
 ﻿using BepInEx.Configuration;
+using UICeo.QuickLoading;
 using UICeo.Sorting.Models;
 using UICeo.CameraZoom;
 
@@ -7,6 +8,7 @@ namespace UICeo.Config;
 static class DefaultConfig
 {
     public static ConfigEntry<bool> SkipLogosOnStartUp;
+    public static ConfigEntry<bool> AutoContinueLastGame;
 
     internal static ConfigEntry<bool> ShowHireConfirmation { get; private set; }
     internal static ConfigEntry<bool> ShowFireConfirmation { get; private set; }
@@ -23,10 +25,13 @@ static class DefaultConfig
     internal static ConfigEntry<float> CameraZoomMin { get; private set; }
     internal static ConfigEntry<float> CameraZoomMax { get; private set; }
 
+    internal static ConfigEntry<bool> SkipAnimationsInMainMenu { get; private set; }
 
     public static void Setup()
     {
         SkipLogosOnStartUp = ConfigReference.Bind("General", "Skip logos on startup", true, "Changing the value will take affect next time you startup the game");
+        AutoContinueLastGame = ConfigReference.Bind("General", "Auto continue last game", false, "Automatically continue the last saved game on startup");
+        AutoContinueLastGame.SettingChanged += AutoContinueService.OnAutoContinueSettingChanged;
 
         ShowHireConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Hire Confirmation", false, "Show a confirmation dialog when hiring an employee");
         ShowFireConfirmation = ConfigReference.Bind("Confirmations - Staff", "Show Fire Confirmation", true, "Show a confirmation dialog when firing an employee");
@@ -43,6 +48,8 @@ static class DefaultConfig
         CameraZoomMin.SettingChanged += CameraZoomService.OnCameraZoomMinChanged;
         CameraZoomMax = ConfigReference.Bind("Camera", "Camera Zoom Max", -350f, "Furthest zoom level (more negative = further out). Default: -350");
         CameraZoomMax.SettingChanged += CameraZoomService.OnCameraZoomMaxChanged;
+
+        SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", false, "Skip the animations in the main menu like the social buttons and the main menu panel");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
