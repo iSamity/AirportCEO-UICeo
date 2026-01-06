@@ -4,7 +4,7 @@
     <TargetFramework>net46</TargetFramework>
     <AssemblyName>UICeo</AssemblyName>
     <Product>UI Ceo</Product>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -27,6 +27,10 @@
     </ItemGroup>
   
     <ItemGroup>
+
+    <Reference Include="AirportCEOModLoader">
+      <HintPath>Libs\AirportCEOModLoader.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
         <HintPath>Libs\Assembly-CSharp-publicized.dll</HintPath>
     </Reference>
