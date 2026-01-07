@@ -27,6 +27,8 @@ static class DefaultConfig
 
     internal static ConfigEntry<bool> SkipAnimationsInMainMenu { get; private set; }
 
+    internal static ConfigEntry<bool> DisableTutorial { get; private set; }
+
     public static void Setup()
     {
         SkipLogosOnStartUp = ConfigReference.Bind("General", "Skip logos on startup", true, "Changing the value will take affect next time you startup the game");
@@ -50,6 +52,8 @@ static class DefaultConfig
         CameraZoomMax.SettingChanged += CameraZoomService.OnCameraZoomMaxChanged;
 
         SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", false, "Skip the animations in the main menu like the social buttons and the main menu panel");
+
+        DisableTutorial = ConfigReference.Bind("Tutorial", "Disable Tutorial", false, "Skip the introduction tutorial on new games");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
