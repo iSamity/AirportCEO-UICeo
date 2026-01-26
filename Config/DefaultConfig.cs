@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using UICeo.QuickLoading;
 using UICeo.Sorting.Models;
+using UICeo.CameraZoom;
 
 namespace UICeo.Config;
 
@@ -21,7 +22,12 @@ static class DefaultConfig
 
     internal static ConfigEntry<bool> SyncStaffFilters { get; private set; }
 
+    internal static ConfigEntry<float> CameraZoomMin { get; private set; }
+    internal static ConfigEntry<float> CameraZoomMax { get; private set; }
+
     internal static ConfigEntry<bool> SkipAnimationsInMainMenu { get; private set; }
+
+    internal static ConfigEntry<bool> DisableTutorial { get; private set; }
 
     public static void Setup()
     {
@@ -40,7 +46,14 @@ static class DefaultConfig
 
         SyncStaffFilters = ConfigReference.Bind("General Filters", "Sync Staff Filters", true, "Sync the staff filters between the staff and applicants screens");
 
+        CameraZoomMin = ConfigReference.Bind("Camera", "Camera Zoom Min", -6f, "Closest zoom level (less negative = closer). Default: -6");
+        CameraZoomMin.SettingChanged += CameraZoomService.OnCameraZoomMinChanged;
+        CameraZoomMax = ConfigReference.Bind("Camera", "Camera Zoom Max", -350f, "Furthest zoom level (more negative = further out). Default: -350");
+        CameraZoomMax.SettingChanged += CameraZoomService.OnCameraZoomMaxChanged;
+
         SkipAnimationsInMainMenu = ConfigReference.Bind("Main Menu", "Skip Animations", false, "Skip the animations in the main menu like the social buttons and the main menu panel");
+
+        DisableTutorial = ConfigReference.Bind("Tutorial", "Disable Tutorial", false, "Skip the introduction tutorial on new games");
     }
 
     static ConfigFile ConfigReference => Plugin.ConfigReference;
